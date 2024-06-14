@@ -42,6 +42,21 @@
                 });
         }
 
+        function fetchUsers(chatId) {
+            fetch(`fetch_users.php?chat_id=${chatId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const userList = document.querySelector('.user-list');
+                    userList.innerHTML = '';
+                    data.forEach(user => {
+                        const userItem = document.createElement('div');
+                        userItem.classList.add('user-item');
+                        userItem.textContent = user.nickname;
+                        userList.appendChild(userItem);
+                    });
+                });
+        }
+
         function selectChat(chatId, chatName) {
             document.querySelector('#chat_id').value = chatId;
             document.querySelector('#chat-title').textContent = chatName;
@@ -51,6 +66,7 @@
             autoScroll = true;
             userScrolling = false;
             fetchPosts(chatId);
+            fetchUsers(chatId);
             document.querySelector('#message-form textarea').focus();
         }
 
@@ -87,6 +103,7 @@
                 const chatId = document.querySelector('#chat_id').value;
                 if (chatId) {
                     fetchPosts(chatId);
+                    fetchUsers(chatId);
                 }
             }, 1000);
 
@@ -188,7 +205,7 @@
             <button id="login-button" style="display:none; margin-top: auto;">Войти</button> <!-- Переместил кнопку вниз -->
         </div>
         <div class="main">
-            <div class="chat-header" style="display: none;">
+            <div class="chat-header">
                 <h1 id="chat-title"></h1>
             </div>
             <div class="posts">
@@ -201,6 +218,12 @@
                 <input type="hidden" id="chat_id" name="chat_id" value="">
                 <textarea name="message" placeholder="Введите ваше сообщение..." required></textarea>
             </form>
+        </div>
+        <div class="user-sidebar">
+            <h2>Пользователи в чате</h2>
+            <div class="user-list">
+                <!-- Список пользователей будет загружаться здесь -->
+            </div>
         </div>
     </div>
 
