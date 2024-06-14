@@ -1,0 +1,261 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: 16.67%; /* 1/6 часть экрана */
+    background-color: #1e1e1e;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.main {
+    width: 83.33%; /* оставшаяся часть экрана */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+}
+
+.chat-header {
+    width: 100%;
+    height: calc(100vh / 12); /* 1/12 часть экрана */
+    background-color: #1e1e1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.create-chat-form,
+.nickname-form {
+    margin-top: 10px;
+}
+
+.create-chat-form input[type="text"] {
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.nickname-form {
+    padding-top: 10px;
+    border-top: 1px solid #444;
+}
+
+input[type="text"], textarea {
+    width: calc(100% - 20px); /* Чтобы учесть padding */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: none;
+    resize: none; /* Убрать возможность изменения размера поля ввода */
+    white-space: pre-wrap; /* Сохранять переносы строк */
+}
+
+textarea:focus {
+    outline: 2px solid #6200ea; /* Цвет обрамления при фокусе */
+}
+
+textarea {
+    caret-color: #6200ea; /* Цвет мигающей линии */
+}
+
+button {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3700b3;
+}
+
+.posts {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #2a2a2a; /* Новый цвет немного темнее, чем фон списка чатов */
+}
+
+.posts::-webkit-scrollbar {
+    width: 8px;
+}
+
+.posts::-webkit-scrollbar-thumb {
+    background-color: #6200ea;
+    border-radius: 4px;
+}
+
+.post {
+    background-color: #2a2a2a;
+    padding: 5px; /* Уменьшено расстояние между сообщениями */
+    margin: 5px 10px; /* Уменьшено расстояние между сообщениями */
+    border-radius: 10px;
+    display: flex;
+    max-width: 80%;
+    word-wrap: break-word;
+    white-space: pre-wrap; /* Сохранять переносы строк */
+}
+
+.post.user {
+    justify-content: flex-end;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.post.other {
+    justify-content: flex-start;
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.post .message {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: calc(66.67vw - 40px); /* Ограничение ширины сообщения */
+}
+
+.nickname {
+    color: #6200ea;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    max-height: calc(66vh - 50px); /* Ограничение высоты списка чатов */
+    overflow-y: auto;
+}
+
+.chat-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-list::-webkit-scrollbar-thumb {
+    background-color: #6200ea;
+    border-radius: 4px;
+}
+
+.chat-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+}
+
+.chat-item:hover {
+    background-color: #373737;
+}
+
+.welcome-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+form#message-form {
+    background-color: #252525; /* Новый цвет немного темнее, чем фон списка чатов */
+    border-top: 2px solid #444; /* Темно-серая полоса под полем ввода сообщений */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Всплывающие формы и затемнение экрана */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-form, .register-form {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px; /* Ширина формы */
+    height: 300px; /* Высота формы */
+}
+
+.login-form input, .register-form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.login-form button, .register-form button {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.login-form button:hover, .register-form button:hover {
+    background-color: #3700b3;
+}
+
+.login-form a, .register-form a {
+    color: #6200ea;
+    text-decoration: none;
+}
+
+.login-form a:hover, .register-form a:hover {
+    text-decoration: underline;
+}
