@@ -1,1 +1,1 @@
-<div class='post user'><div class='nickname'></div><div class='message'>круто</div></div>
+<div class='post user'><div class='nickname'>kjhrd</div><div class='message'>круто</div></div>
