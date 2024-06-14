@@ -109,7 +109,7 @@
 
             document.querySelector('#message-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                fetch('post.php', {
+                fetch(`post.php?nickname=${localStorage.getItem('nickname')}`, {
                     method: 'POST',
                     body: new FormData(this)
                 }).then(response => {
