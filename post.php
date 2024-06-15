@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['message']) && !empty
     $chat_id = intval($_POST['chat_id']);
     $class = 'user'; // Все сообщения отправляются пользователем
     $content = "<div class='nickname'>{$nickname}</div><div class='message'>{$message}</div>";
-    $filename = "posts/{$chat_id}_" . '.txt';
-    file_put_contents($filename, "<div class='post {$class}'>{$content}</div>");
+    $filename = "posts/{$chat_id}" . '.txt';
+    file_put_contents($filename, "${file_get_contents($filename)}\n{$content}");
 }
 ?>
