@@ -1,11 +1,18 @@
 <?php
-$chat_id = isset($_GET['chat_id']) ? intval($_GET['chat_id']) : 0;
-$files = array_diff(scandir('posts', SCANDIR_SORT_DESCENDING), array('.', '..'));
-foreach ($files as $file) {
-    if (strpos($file, "{$chat_id}_") === 0) {
-        foreach(file_get_contents("posts/$file") as $line){
-            echo $line;
-        }
+$chat_id = $_GET['chat_id'];
+
+// Ожидаем, что файл posts.txt содержит данные в формате:
+// chat_id|nickname|message
+
+$posts = file('posts.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$chatPosts = [];
+
+foreach ($posts as $post) {
+    list($postChatId, $nickname, $message) = explode('|', $post);
+    if ($postChatId == $chat_id) {
+        $chatPosts[] = ['nickname' => $nickname, 'message' => $message];
     }
 }
+
+echo json_encode($chatPosts);
 ?>

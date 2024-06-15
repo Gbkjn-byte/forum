@@ -27,17 +27,24 @@
 
         function fetchPosts(chatId) {
             fetch(`fetch_posts.php?chat_id=${chatId}`)
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
                     const postsContainer = document.querySelector('.posts');
-                    const previousScrollHeight = postsContainer.scrollHeight;
-                    const previousScrollTop = postsContainer.scrollTop;
-                    postsContainer.innerHTML = data;
-
-                    if (autoScroll && !userScrolling) {
+                    postsContainer.innerHTML = '';
+                    data.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.classList.add('post');
+                        if (post.nickname === localStorage.getItem('nickname')) {
+                            postElement.classList.add('user');
+                            postElement.innerHTML = `<div class="message-container"><div class="message">${post.message}</div></div>`;
+                        } else {
+                            postElement.classList.add('other');
+                            postElement.innerHTML = `<div class="message-container"><span class="nickname">${post.nickname}</span><div class="message">${post.message}</div></div>`;
+                        }
+                        postsContainer.appendChild(postElement);
+                    });
+                    if (autoScroll) {
                         postsContainer.scrollTop = postsContainer.scrollHeight;
-                    } else {
-                        postsContainer.scrollTop = previousScrollTop + (postsContainer.scrollHeight - previousScrollHeight);
                     }
                 });
         }
@@ -74,6 +81,7 @@
             const nickname = localStorage.getItem('nickname') || '';
             if (nickname) {
                 document.querySelector('.nickname-display').textContent = `Привет, ${nickname}`;
+                document.querySelector('.welcome-message').innerHTML = `<h1>Здравствуйте, ${nickname}, выберите чат</h1>`;
                 document.querySelector('#login-button').style.display = 'none';
             } else {
                 document.querySelector('#login-button').style.display = 'block';
@@ -109,17 +117,20 @@
 
             document.querySelector('#message-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                let cont = new FormData(this);
-                cont.append('nickname', localStorage.getItem('nickname'));
-                fetch(`post.php`, {
-                    method: 'POST',
-                    body: cont;
-                }).then(response => {
-                    this.reset();
-                    autoScroll = true;
-                    fetchPosts(document.querySelector('#chat_id').value);
-                    document.querySelector('#message-form textarea').focus();
-                });
+                if (localStorage.getItem('nickname')) {
+                    const formData = new FormData(this);
+                    formData.append('nickname', localStorage.getItem('nickname'));
+                    fetch('post.php', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
+                        this.reset();
+                        fetchPosts(document.querySelector('#chat_id').value);
+                        document.querySelector('#message-form textarea').focus();
+                    });
+                } else {
+                    alert('Пожалуйста, войдите, чтобы отправлять сообщения.');
+                }
             });
 
             document.querySelector('#message-form textarea').addEventListener('keydown', function(event) {
@@ -163,6 +174,7 @@
                     if (data.success) {
                         localStorage.setItem('nickname', formData.get('nickname'));
                         document.querySelector('.nickname-display').textContent = `Привет, ${formData.get('nickname')}`;
+                        document.querySelector('.welcome-message').innerHTML = `<h1>Здравствуйте, ${formData.get('nickname')}, выберите чат</h1>`;
                         document.querySelector('#login-button').style.display = 'none';
                         hideForms();
                     } else {
@@ -182,6 +194,7 @@
                     if (data.success) {
                         localStorage.setItem('nickname', formData.get('nickname'));
                         document.querySelector('.nickname-display').textContent = `Привет, ${formData.get('nickname')}`;
+                        document.querySelector('.welcome-message').innerHTML = `<h1>Здравствуйте, ${formData.get('nickname')}, выберите чат</h1>`;
                         document.querySelector('#login-button').style.display = 'none';
                         hideForms();
                     } else {
