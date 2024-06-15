@@ -109,11 +109,11 @@
 
             document.querySelector('#message-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                let formData = new FormData(this);
-                formData.append("nickname", localStorage.getItem('nickname'));
+                let cont = new FormData(this);
+                cont.append('nickname', localStorage.getItem('nickname'));
                 fetch(`post.php`, {
                     method: 'POST',
-                    body: formData;
+                    body: cont;
                 }).then(response => {
                     this.reset();
                     autoScroll = true;
