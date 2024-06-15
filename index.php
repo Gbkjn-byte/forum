@@ -64,6 +64,19 @@
                 });
         }
 
+        function sendViewingSignal(chatId) {
+            const nickname = localStorage.getItem('nickname');
+            if (nickname && chatId) {
+                fetch(`viewing_signal.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nickname, chat_id: chatId })
+                });
+            }
+        }
+
         function selectChat(chatId, chatName) {
             document.querySelector('#chat_id').value = chatId;
             document.querySelector('#chat-title').textContent = chatName;
@@ -75,6 +88,7 @@
             fetchPosts(chatId);
             fetchUsers(chatId);
             document.querySelector('#message-form textarea').focus();
+            sendViewingSignal(chatId); // Отправляем сигнал при выборе чата
         }
 
         function setNickname() {
@@ -112,6 +126,7 @@
                 if (chatId) {
                     fetchPosts(chatId);
                     fetchUsers(chatId);
+                    sendViewingSignal(chatId); // Периодически отправляем сигнал
                 }
             }, 1000);
 
@@ -129,7 +144,7 @@
                         document.querySelector('#message-form textarea').focus();
                     });
                 } else {
-                    alert('Пожалуйста, войдите, чтобы отправлять сообщения.');
+                    showLoginForm();
                 }
             });
 
