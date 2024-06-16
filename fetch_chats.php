@@ -14,8 +14,9 @@ foreach ($chats as $chat) {
 
 foreach ($privateChats as $chat) {
     list($chatId, $chatName, $accessCode, $creator, $invitedUsers) = array_pad(explode('|', $chat), 5, '');
-    if ($creator === $nickname || in_array($nickname, explode(',', $invitedUsers))) {
-        $chatList[] = ['id' => $chatId, 'name' => $chatName, 'private' => true, 'creator' => $creator, 'invited_users' => explode(',', $invitedUsers)];
+    $invitedUsersArray = explode(',', $invitedUsers);
+    if ($creator === $nickname || in_array($nickname, $invitedUsersArray)) {
+        $chatList[] = ['id' => $chatId, 'name' => $chatName, 'private' => true, 'creator' => $creator, 'invited_users' => $invitedUsersArray];
     }
 }
 

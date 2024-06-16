@@ -10,12 +10,12 @@
         let userScrolling = false;
 
         function fetchChats() {
-            fetch('fetch_chats.php')
+            const nickname = localStorage.getItem('nickname');
+            fetch(`fetch_chats.php?nickname=${nickname}`)
                 .then(response => response.json())
                 .then(data => {
                     const chatList = document.querySelector('.chat-list');
                     chatList.innerHTML = '';
-                    const nickname = localStorage.getItem('nickname');
                     data.forEach(chat => {
                         if (!chat.private || chat.creator === nickname || chat.invited_users.includes(nickname)) {
                             const chatItem = document.createElement('div');
@@ -299,7 +299,7 @@
                 <input type="text" name="access_code" placeholder="Код приватного чата" required>
                 <button type="submit">Войти в приватный чат</button>
             </form>
-            <form id="invite-user-form" style="display: none;">
+            <form id="invite-user-form" style="position: absolute; bottom: 10px;">
                 <input type="text" name="nickname" placeholder="Пригласить пользователя" required>
                 <button type="submit">Пригласить</button>
             </form>
