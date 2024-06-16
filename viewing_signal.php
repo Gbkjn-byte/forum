@@ -9,11 +9,15 @@ $lines = file($userFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $newLines = [];
 $updated = false;
 
+// Удаляем старые записи о пользователе в других чатах
 foreach ($lines as $line) {
     list($existingChatId, $existingNickname, $existingTimestamp) = explode('|', $line);
-    if ($existingNickname === $nickname && $existingChatId === $chat_id) {
-        $newLines[] = "$chat_id|$nickname|$timestamp";
-        $updated = true;
+    if ($existingNickname === $nickname) {
+        if ($existingChatId === $chat_id) {
+            $newLines[] = "$chat_id|$nickname|$timestamp";
+            $updated = true;
+        }
+        // Не добавляем старые записи о пользователе
     } else {
         $newLines[] = $line;
     }

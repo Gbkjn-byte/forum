@@ -128,6 +128,7 @@
                     fetchUsers(chatId);
                     sendViewingSignal(chatId); // Периодически отправляем сигнал
                 }
+                fetchChats();
             }, 1000);
 
             document.querySelector('#message-form').addEventListener('submit', function(event) {
@@ -214,6 +215,23 @@
                         hideForms();
                     } else {
                         // Обработка ошибок регистрации
+                    }
+                });
+            });
+
+            document.querySelector('.create-chat-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('create_chat.php', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchChats(); // Обновляем список чатов после успешного создания
+                        this.reset();
+                    } else {
+                        // Обработка ошибок создания чата
                     }
                 });
             });
