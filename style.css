@@ -41,194 +41,17 @@ body {
 }
 
 .chat-header {
-    width: 100%;
-    height: calc(100vh / 12); /* 1/12 часть экрана */
-    background-color: #1e1e1e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-    box-sizing: border-box;
-    flex-shrink: 0; /* Предотвращает сжатие высоты при переполнении */
-}
-
-h1 {
-    margin: 0;
-    text-align: center;
-    font-size: 1.5em;
-}
-
-h2 {
-    margin-bottom: 20px;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-.create-chat-form,
-.nickname-form {
-    margin-top: 10px;
-}
-
-.create-chat-form input[type="text"] {
-    border: 2px solid #444;
-    border-radius: 5px;
-    background-color: #1e1e1e;
-    color: #ffffff;
-}
-
-.nickname-form {
-    padding-top: 10px;
-    border-top: 1px solid #444;
-}
-
-input[type="text"], textarea {
-    width: calc(100% - 20px); /* Чтобы учесть padding */
-    margin-bottom: 10px;
+    background-color: #252525;
     padding: 10px;
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border: none;
-    resize: none; /* Убрать возможность изменения размера поля ввода */
-    white-space: pre-wrap; /* Сохранять переносы строк */
-}
-
-textarea:focus {
-    outline: 2px solid #6200ea; /* Цвет обрамления при фокусе */
-}
-
-textarea {
-    caret-color: #6200ea; /* Цвет мигающей линии */
-}
-
-button {
-    background-color: #6200ea;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #3700b3;
+    border-bottom: 2px solid #444;
+    display: none;
 }
 
 .posts {
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    background-color: #2a2a2a; /* Новый цвет немного темнее, чем фон списка чатов */
-}
-
-.posts::-webkit-scrollbar {
-    width: 8px;
-}
-
-.posts::-webkit-scrollbar-thumb {
-    background-color: #6200ea;
-    border-radius: 4px;
-}
-
-.post {
-    background-color: #2a2a2a;
-    padding: 5px; /* Уменьшено расстояние между сообщениями */
-    margin: 5px 10px; /* Уменьшено расстояние между сообщениями */
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    word-wrap: break-word;
-    white-space: pre-wrap; /* Сохранять переносы строк */
-}
-
-.post.user {
-    align-self: flex-end;
-    margin-left: auto;
-}
-
-.post.other {
-    align-self: flex-start;
-    margin-right: auto;
-}
-
-.post .message-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.post.user .message-container {
-    align-items: flex-end;
-}
-
-.nickname {
-    color: #6200ea; /* Цвет кнопки "Создать" */
-    font-weight: bold;
-}
-
-.message {
-    background-color: #1e1e1e;
-    border-radius: 10px;
     padding: 10px;
-    max-width: calc(66.67vw - 40px); /* Ограничение ширины сообщения */
-}
-
-.chat-list {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    max-height: calc(66vh - 50px); /* Ограничение высоты списка чатов */
-    overflow-y: auto;
-}
-
-.chat-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.chat-list::-webkit-scrollbar-thumb {
-    background-color: #6200ea;
-    border-radius: 4px;
-}
-
-.chat-item {
-    padding: 10px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: #2a2a2a;
-    border-radius: 5px;
-}
-
-.chat-item:hover {
-    background-color: #373737;
-}
-
-.user-list {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    max-height: calc(66vh - 50px); /* Ограничение высоты списка пользователей */
-    overflow-y: auto;
-}
-
-.user-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.user-list::-webkit-scrollbar-thumb {
-    background-color: #6200ea;
-    border-radius: 4px;
-}
-
-.user-item {
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
-    color: #6200ea; /* Цвет кнопки "Создать" */
+    box-sizing: border-box;
 }
 
 .welcome-message {
@@ -240,18 +63,118 @@ button:hover {
 }
 
 form#message-form {
-    background-color: #252525; /* Новый цвет немного темнее, чем фон списка чатов */
-    border-top: 2px solid #444; /* Темно-серая полоса под полем ввода сообщений */
+    background-color: #252525;
+    border-top: 2px solid #444;
     padding-top: 10px;
     padding-bottom: 10px;
     box-sizing: border-box;
     display: flex;
-    align-items: flex-start; /* Сообщения отправляются из левой нижней части поля для сообщений */
+    align-items: flex-start;
     position: sticky;
     bottom: 0;
+    width: 100%;
 }
 
-/* Всплывающие формы и затемнение экрана */
+form#message-form textarea {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 10px;
+    resize: none;
+    outline: none;
+}
+
+form#create-chat-form,
+form#join-private-chat-form,
+form#invite-user-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.create-chat-form input,
+#join-private-chat-form input,
+#invite-user-form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.create-chat-form button,
+#join-private-chat-form button,
+#invite-user-form button,
+.chat-button {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.create-chat-form button:hover,
+#join-private-chat-form button:hover,
+#invite-user-form button:hover,
+.chat-button:hover {
+    background-color: #3700b3;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.chat-list,
+.user-list,
+.invited-users-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    max-height: calc(66vh - 50px);
+    overflow-y: auto;
+}
+
+.chat-list::-webkit-scrollbar,
+.user-list::-webkit-scrollbar,
+.invited-users-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-list::-webkit-scrollbar-thumb,
+.user-list::-webkit-scrollbar-thumb,
+.invited-users-list::-webkit-scrollbar-thumb {
+    background-color: #6200ea;
+    border-radius: 4px;
+}
+
+.chat-item,
+.user-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+}
+
+.chat-item:hover,
+.user-item:hover {
+    background-color: #373737;
+}
+
+.nickname-display {
+    margin-top: auto;
+    text-align: center;
+    font-size: 1.2em;
+    color: #6200ea;
+}
+
 .overlay {
     position: fixed;
     top: 0;
@@ -265,7 +188,8 @@ form#message-form {
     z-index: 1000;
 }
 
-.login-form, .register-form {
+.login-form,
+.register-form {
     background: #1e1e1e;
     padding: 20px;
     border-radius: 10px;
@@ -273,11 +197,12 @@ form#message-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px; /* Ширина формы */
-    height: 300px; /* Высота формы */
+    width: 300px;
+    height: 300px;
 }
 
-.login-form input, .register-form input {
+.login-form input,
+.register-form input {
     margin-bottom: 10px;
     padding: 10px;
     width: 200px;
@@ -287,23 +212,57 @@ form#message-form {
     color: #ffffff;
 }
 
-.login-form button, .register-form button {
+.login-form button,
+.register-form button {
     background-color: #6200ea;
     color: #ffffff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
-.login-form button:hover, .register-form button:hover {
+.login-form button:hover,
+.register-form button:hover {
     background-color: #3700b3;
 }
 
-.login-form a, .register-form a {
+.login-form a,
+.register-form a {
     color: #6200ea;
     text-decoration: none;
 }
 
-.login-form a:hover, .register-form a:hover {
+.login-form a:hover,
+.register-form a:hover {
     text-decoration: underline;
+}
+
+.post {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+}
+
+.post.user .message-container {
+    background-color: #6200ea;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post.other .message-container {
+    background-color: #444;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.nickname {
+    color: #6200ea;
+    font-weight: bold;
+    margin-right: 5px;
 }

@@ -15,12 +15,18 @@
                 .then(data => {
                     const chatList = document.querySelector('.chat-list');
                     chatList.innerHTML = '';
+                    const nickname = localStorage.getItem('nickname');
                     data.forEach(chat => {
-                        const chatItem = document.createElement('div');
-                        chatItem.classList.add('chat-item');
-                        chatItem.textContent = chat.name;
-                        chatItem.onclick = () => selectChat(chat.id, chat.name);
-                        chatList.appendChild(chatItem);
+                        if (!chat.private || chat.creator === nickname || chat.invited_users.includes(nickname)) {
+                            const chatItem = document.createElement('div');
+                            chatItem.classList.add('chat-item');
+                            chatItem.textContent = chat.name;
+                            if (chat.private) {
+                                chatItem.style.color = '#6200ea';
+                            }
+                            chatItem.onclick = () => selectChat(chat.id, chat.name);
+                            chatList.appendChild(chatItem);
+                        }
                     });
                 });
         }
@@ -83,6 +89,7 @@
             document.querySelector('.chat-header').style.display = 'flex';
             document.querySelector('#message-form').style.display = 'flex';
             document.querySelector('.welcome-message').style.display = 'none';
+            document.querySelector('#invite-user-form').style.display = 'block'; // Показать форму приглашения
             autoScroll = true;
             userScrolling = false;
             fetchPosts(chatId);
@@ -156,6 +163,24 @@
                 }
             });
 
+            document.querySelector('#invite-user-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                formData.append('chat_id', document.querySelector('#chat_id').value);
+                fetch('invite_user.php', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Пользователь приглашен");
+                        this.reset();
+                    } else {
+                        alert("Ошибка приглашения пользователя");
+                    }
+                });
+            });
+
             const postsContainer = document.querySelector('.posts');
             postsContainer.addEventListener('scroll', () => {
                 if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
@@ -219,10 +244,12 @@
                 });
             });
 
-            document.querySelector('.create-chat-form').addEventListener('submit', function(event) {
+            document.querySelector('#create-chat-form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const formData = new FormData(this);
-                fetch('create_chat.php', {
+                const chatType = formData.get('chat_type');
+                formData.append('nickname', localStorage.getItem('nickname')); // Добавляем никнейм к данным формы
+                fetch(chatType === 'private' ? 'create_private_chat.php' : 'create_chat.php', {
                     method: 'POST',
                     body: formData
                 }).then(response => response.json())
@@ -232,6 +259,22 @@
                         this.reset();
                     } else {
                         // Обработка ошибок создания чата
+                    }
+                });
+            });
+
+            document.querySelector('#join-private-chat-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('join_private_chat.php', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        selectChat(data.chat_id, data.chat_name);
+                    } else {
+                        alert("Неверный код чата");
                     }
                 });
             });
@@ -245,12 +288,23 @@
             <div class="chat-list">
                 <!-- Список чатов будет загружаться здесь -->
             </div>
-            <form action="create_chat.php" method="POST" class="create-chat-form">
+            <form id="create-chat-form">
                 <input type="text" name="chat_name" placeholder="Название чата" required>
-                <button type="submit">Создать</button>
+                <div class="button-container">
+                    <button type="submit" name="chat_type" value="public" class="chat-button">Создать</button>
+                    <button type="submit" name="chat_type" value="private" class="chat-button">Создать приватный чат</button>
+                </div>
+            </form>
+            <form action="join_private_chat.php" method="POST" id="join-private-chat-form">
+                <input type="text" name="access_code" placeholder="Код приватного чата" required>
+                <button type="submit">Войти в приватный чат</button>
+            </form>
+            <form id="invite-user-form" style="display: none;">
+                <input type="text" name="nickname" placeholder="Пригласить пользователя" required>
+                <button type="submit">Пригласить</button>
             </form>
             <div class="nickname-display"></div>
-            <button id="login-button" style="display:none; margin-top: auto;">Войти</button> <!-- Переместил кнопку вниз -->
+            <button id="login-button" style="display:none; margin-top: auto;">Войти</button>
         </div>
         <div class="main">
             <div class="chat-header">
