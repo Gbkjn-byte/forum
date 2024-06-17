@@ -3,6 +3,6 @@ private_666ec59ac140f|123|7dfb4e89|123
 private_666ec5b64041d|123|3064bbdd|Komp1
 private_666ee3174a880|PCH|ed4f4f94|
 private_666ee3213102e|PCH|c26b0fd7|Komp1
-private_666ee3a21c8a3|Казахстан|8009f2f3|Gbkjn_
+private_666ee3a21c8a3|Казахстан|8009f2f3|Gbkjn_|Komp1
 private_666ee5032c31a|Казахстан|3ef13446|Gbkjn_
 private_666f18ed71949|Чат гениев|ab2137e4|Komp1

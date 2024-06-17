@@ -299,7 +299,7 @@
                 <input type="text" name="access_code" placeholder="Код приватного чата" required>
                 <button type="submit">Войти в приватный чат</button>
             </form>
-            <form id="invite-user-form" style="position: absolute; bottom: 10px;">
+            <form id="invite-user-form">
                 <input type="text" name="nickname" placeholder="Пригласить пользователя" required>
                 <button type="submit">Пригласить</button>
             </form>

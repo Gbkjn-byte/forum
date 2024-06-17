@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $access_code = bin2hex(random_bytes(4));
 
     // Запись нового приватного чата в файл
-    $chatLine = "$private_chat_id|$private_chat_name|$access_code|$creator" . PHP_EOL;
+    $chatLine = "$private_chat_id|$private_chat_name|$access_code|$creator|" . PHP_EOL;
     file_put_contents('private_chats.txt', $chatLine, FILE_APPEND);
 
     echo json_encode(['success' => true, 'access_code' => $access_code]);

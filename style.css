@@ -138,7 +138,7 @@ form#invite-user-form {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    max-height: calc(66vh - 50px);
+    max-height: 250px; /* Устанавливаем фиксированную высоту списка чатов */
     overflow-y: auto;
 }
 
@@ -266,4 +266,10 @@ form#invite-user-form {
     color: #6200ea;
     font-weight: bold;
     margin-right: 5px;
+}
+
+form#invite-user-form {
+    position: absolute;
+    bottom: 10px;
+    width: calc(100% - 20px); /* Учитываем отступы */
 }
