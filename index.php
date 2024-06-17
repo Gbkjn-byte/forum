@@ -304,7 +304,7 @@
                 <button type="submit">Пригласить</button>
             </form>
             <div class="nickname-display"></div>
-            <button id="login-button" style="display:none; margin-top: auto;">Войти</button>
+            <button id="login-button" style="display:none; margin-top: 20px;">Войти</button>
         </div>
         <div class="main">
             <div class="chat-header">

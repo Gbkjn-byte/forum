@@ -107,6 +107,10 @@ form#invite-user-form {
     color: #ffffff;
 }
 
+.create-chat-form input {
+    background-color: #252525; /* Цвет фона поля ввода названия чата */
+}
+
 .create-chat-form button,
 #join-private-chat-form button,
 #invite-user-form button,
@@ -138,7 +142,7 @@ form#invite-user-form {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    max-height: 250px; /* Устанавливаем фиксированную высоту списка чатов */
+    max-height: 300px; /* Устанавливаем фиксированную высоту списка чатов */
     overflow-y: auto;
 }
 
@@ -270,6 +274,6 @@ form#invite-user-form {
 
 form#invite-user-form {
     position: absolute;
-    bottom: 10px;
+    bottom: 50px; /* Поднимаем форму немного выше */
     width: calc(100% - 20px); /* Учитываем отступы */
 }
